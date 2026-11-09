@@ -15,18 +15,24 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      - name: Inspect toolchain
+        run: |
+          echo "DEVKITPRO=$DEVKITPRO"
+          ls -la "$DEVKITPRO"
+          ls -la "$DEVKITPRO/libnx"
+          test -f "$DEVKITPRO/libnx/switch_rules"
+
       - name: Build NRO
         run: |
-          export DEVKITPRO=/opt/devkitpro
           make -j2
 
-      - name: Check output
+      - name: Verify output
         run: |
           test -f RobloxSwitch.nro
           file RobloxSwitch.nro
           ls -lh RobloxSwitch.nro
 
-      - name: Upload application
+      - name: Upload NRO
         uses: actions/upload-artifact@v4
         with:
           name: RobloxSwitch-NRO

@@ -1,4 +1,7 @@
+.DEFAULT_GOAL := all
+
 TARGET := RobloxSwitch
+OUTPUT := $(TARGET)
 BUILD := build
 SOURCES := source
 DATA :=
@@ -9,3 +12,6 @@ APP_AUTHOR := Native Development
 APP_VERSION := 0.1.0
 
 include $(DEVKITPRO)/libnx/switch_rules
+
+.PHONY: all
+all: $(OUTPUT).nro
