@@ -1,0 +1,33 @@
+name: Build RobloxSwitch
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkita64:latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Build NRO
+        run: |
+          export DEVKITPRO=/opt/devkitpro
+          make -j2
+
+      - name: Check output
+        run: |
+          test -f RobloxSwitch.nro
+          file RobloxSwitch.nro
+          ls -lh RobloxSwitch.nro
+
+      - name: Upload application
+        uses: actions/upload-artifact@v4
+        with:
+          name: RobloxSwitch-NRO
+          path: RobloxSwitch.nro
