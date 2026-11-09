@@ -10,11 +10,9 @@ int main(int argc, char **argv)
     printf("       Native Prototype\n");
     printf("================================\n\n");
 
-    printf("Project initialized successfully.\n\n");
-    printf("Target: Nintendo Switch\n");
-    printf("Architecture: ARM64\n");
-    printf("Platform: Atmosphere / libnx\n\n");
-
+    printf("Native application initialized.\n");
+    printf("Platform: Nintendo Switch\n");
+    printf("Architecture: ARM64\n\n");
     printf("Press PLUS to exit.\n");
 
     while (appletMainLoop())
