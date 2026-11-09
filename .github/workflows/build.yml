@@ -12,28 +12,30 @@ jobs:
       image: devkitpro/devkita64:latest
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Inspect toolchain
+      - name: Inspect source
         run: |
-          echo "DEVKITPRO=$DEVKITPRO"
-          ls -la "$DEVKITPRO"
-          ls -la "$DEVKITPRO/libnx"
-          test -f "$DEVKITPRO/libnx/switch_rules"
+          pwd
+          find . -maxdepth 3 -type f
+          test -s source/main.c
+
+      - name: Inspect Make variables
+        run: |
+          make -pn | grep -E '^(TARGET|SOURCES|CFILES|OFILES_SRC|OFILES) ?[:=]'
 
       - name: Build NRO
         run: |
-          make -j2
+          make clean
+          make V=1
 
-      - name: Verify output
+      - name: Verify NRO
         run: |
-          test -f RobloxSwitch.nro
+          test -s RobloxSwitch.nro
           file RobloxSwitch.nro
           ls -lh RobloxSwitch.nro
 
-      - name: Upload NRO
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: RobloxSwitch-NRO
           path: RobloxSwitch.nro
